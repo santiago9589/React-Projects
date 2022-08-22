@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    .error-msg-create {
+        @apply text-lg text-black bg-red-500 rounded-lg my-2 w-full text-center
+    }
+
+    .succes-msg-create{
+        @apply text-lg text-black bg-green-500 rounded-lg my-2 w-full text-center
+    }
+    .btn-form {
+        @apply border-4 rounded-xl bg-slate-500 max-h-12 text-lg py-2 text-white hover:bg-slate-800
+    }
+
+    .input-form {
+        @apply w-full border-2 rounded-lg shadow-lg sm:max-w-xs sm:max-h-7
+    }
+
+    .form-template {
+        @apply flex flex-col space-y-5 p-2
+    }
+
+    .nav-bar {
+        @apply flex space-y-5 bg-gray-400 flex-col w-full h-full p-2  sm:flex-row sm:space-y-0 sm:justify-between sm:items-center
+    }
+
+    .nav-bar-link {
+        @apply block text-lg my-2 hover:underline hover:text-xl sm:inline-block sm:my-0 sm:mx-5
+    }
+
+    .card-product {
+        @apply flex flex-col p-2 box-border bg-slate-400 m-2
+    }
+
+    .card-header-product {
+        @apply flex flex-col pb-2 w-full h-3/6
+    }
+
+    .card-body-product {
+        @apply w-full h-2/6 sm:max-h-28
+    }
+
+    .card-footer-product {
+        @apply w-full h-1/6
+    }
+
+    .card-buy {
+        @apply flex flex-col p-2 box-border min-h-min min-w-min max-w-md bg-violet-50
+    }
+
+    .card-header-buy {
+        @apply flex flex-col pb-2 w-full h-2/6
+    }
+
+    .card-body-buy {
+        @apply  w-full h-2/6
+    }
+
+    .card-footer-buy {
+        @apply  w-full h-2/6
+    }
+
+    .detalle-product {
+        @apply text-start text-sm font-semibold p-1 hover:text-xl hover:underline sm:text-center
+    }
+
+    .detalle-product-seller {
+        @apply text-start text-sm font-semibold p-0.5 hover:text-xl hover:underline sm:text-center
+    }
+}
