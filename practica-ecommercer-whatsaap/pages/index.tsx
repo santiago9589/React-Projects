@@ -5,6 +5,7 @@ import ProductComponent from '../components/Product'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import ProductComponentAside from '../components/Product.aside'
+import Title from '../components/Title'
 
 interface propsHome {
   products: Product[]
@@ -67,6 +68,7 @@ const Home: NextPage<propsHome> = ({ products }) => {
 
   return (
     <>
+      <Title Title='SERPO ECOMMERCE' />
       <div className='grid grid-cols-4x gap-4 bg-blue-200 w-screen h-screen overflow-scroll relative'>
         {
           products.map((product, index) => {

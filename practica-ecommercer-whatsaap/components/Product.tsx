@@ -10,7 +10,6 @@ const ProductComponent = ({ Product, setTicket }: propsProduct) => {
     return (
         <div className='flex flex-col w-full h-full justify-between'>
             <section>
-                <div>juansas</div>
                 <h4>{Product.title}</h4>
                 <p>{Product.id}</p>
                 <p>{Product.price.toLocaleString("es-AR", {
