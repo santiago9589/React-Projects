@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { Product } from "../api/product"
 
-export const useList = (initalProducts:Product[]) =>{
-    const [list, setList] = useState<Product[]>(initalProducts)
+export const useList = () =>{
+    const [list, setList] = useState<Product[]>()
     const [page, setPage] = useState<number>(0)
   
     const nextPage = (value: number) => {

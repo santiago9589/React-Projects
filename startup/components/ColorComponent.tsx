@@ -1,51 +1,60 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Product } from '../api/product'
+import { filters } from '../pages'
 
 interface ColorProps {
   products: Product[]
+  handleChangeColors:(filter:filters)=>void
 }
 
-const ColorComponent = ({ products }: ColorProps) => {
+const ColorComponent = ({ products,handleChangeColors }: ColorProps) => {
 
-  const [colors, setColors] = useState<string[]>([])
-  const [colorsSelect, setColorsSelect] = useState<string[]>([])
+  const [colorsSelected,setColorsSelected] = useState<Set<string>>(()=>new Set())
 
-  const addColors = () => {
-    const draft = new Set<string>()
-    for (let product of products) {
-      draft.add(product.color)
+  const colors = useMemo(() => {
+    const draft: Set<string> = new Set()
+    products.forEach((product) => draft.add(product.color))
+    return Array.from(draft)
+  }, [products])
+
+  const handleChange = (color:string,isCheck:boolean)=>{
+    const draft = structuredClone(colorsSelected)
+
+    if(isCheck){
+      draft.add(color)
+    }else{
+      draft.delete(color)
     }
-    setColors(Array.from(draft))
+    setColorsSelected(draft)
+
+    handleChangeColors(draft.size ? (product)=>draft.has(product.color) : null)
+
   }
 
-  useEffect(() => {
-    addColors()
-  }, [])
 
-  const handleClick = (color: string) => {
-    const draft = new Set<string>()
-    draft.add(color)
-    setColorsSelect(Array.from(draft))
-  }
 
-  console.log(colorsSelect)
 
   return (
-    <div className='flex flex-col'>
+    <ul className='flex flex-col border-2 border-black p-2'>
+      <h4 className='text-center'>ColorFilters</h4>
       {
         colors.map((color, index) => {
           return (
-            <div className='flex items-center' key={index}>
-              <label>{color}</label>
+            <li className='flex items-center' key={index}>
               <input
                 type="checkbox"
-                onChange={(e) => handleClick(color)}
-              />
-            </div>
+                name='color'
+                value={color}
+                onChange={(e)=>{
+                  handleChange(color,e.target.checked)
+                }}
+              /> 
+              <label className='mb-1 ml-1'>{color}</label>
+            </li>
           )
         })
       }
-    </div>
+    </ul>
   )
 }
 
