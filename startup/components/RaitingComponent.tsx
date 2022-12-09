@@ -1,33 +1,46 @@
 import React, { useMemo, useState } from 'react'
 import { Product } from '../api/product'
-import { filters } from '../pages'
+import { filters } from "../hooks/filters"
+import { useRaiting } from '../hooks/raintig'
+import TitleFilter from './titleFilter'
 
 interface RaitingProps {
-  handleChangeRaiting:(filter:filters)=>void
-  products:Product[]
+  handleChangeRaiting: (filter: filters) => void
+  products: Product[]
 }
 
 
-const RaitingComponent = ({handleChangeRaiting,products}:RaitingProps) => {
+const RaitingComponent = ({ handleChangeRaiting, products }: RaitingProps) => {
 
-  const raiting = useMemo(()=>{
+  const {handleClick} = useRaiting(handleChangeRaiting)
+
+  const raiting = useMemo(() => {
     const draft = new Set<number>()
-    products.forEach((product)=>draft.add(product.rating))
+    products.forEach((product) => draft.add(product.rating))
     return Array.from(draft)
-  },[products])
+  }, [products])
 
-  const handleClick = (range:number)=>{
-    handleChangeRaiting((product)=>product.rating === range)
-  }
+ 
+
 
   return (
-    <ul className='border-2 border-black p-2' >
-      <h4 className='text-center'>RaitingFilters</h4>
+    <ul className='filter-container' >
+      <TitleFilter title='Raiting'/>
       {
-        raiting.sort().map((range,index)=>{
-          return(
-            <li key={index} onClick={()=>{handleClick(range)}}>
-                <p>{"★".repeat(range).padEnd(5,"☆")}</p>
+        raiting.sort().map((range, index) => {
+          return (
+            <li key={index}>
+              <input
+                type="checkbox"
+                name='start'
+                value={range}
+                onChange={(e) => {
+                  handleClick(range, e.target.checked)
+                }}
+              />
+              <label className='ml-2'>{"★".repeat(range).padEnd(5, "☆")}</label>
+
+
             </li>
           )
         })
@@ -37,3 +50,4 @@ const RaitingComponent = ({handleChangeRaiting,products}:RaitingProps) => {
 }
 
 export default RaitingComponent
+

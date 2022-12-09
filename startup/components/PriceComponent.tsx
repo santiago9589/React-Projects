@@ -1,33 +1,21 @@
 import React, { useMemo, useState } from 'react'
 import { Product } from '../api/product'
-import { filters } from '../pages'
+import { filters } from "../hooks/filters"
+import { usePrice } from '../hooks/price'
+import TitleFilter from './titleFilter'
 
 interface PriceProps {
-  products: Product[]
   handleChangePrice: (filter: filters) => void
 }
 
-type valuesNum = Record<string, number>
+const PriceComponent = ({ handleChangePrice }: PriceProps) => {
 
-const PriceComponent = ({ products, handleChangePrice }: PriceProps) => {
-
-  const [minValue, setMinValue] = useState<number>(0)
-  const [maxValue, setMaxValue] = useState<number>(0)
-
-  const handleChangeMin = (value: number) => {
-    setMinValue(value)
-    handleChangePrice(value ? (product) => ((product.price > value) && (product.price <= maxValue)) : null)
-  }
-
-  const handleChangeMax = (value: number) => {
-    setMaxValue(value)
-    handleChangePrice(value ? (product) => ((product.price <= value) && (product.price >= minValue)) : null)
-  }
+  const {minValue,maxValue,handleChangeMax,handleChangeMin} = usePrice(handleChangePrice)
 
 
   return (
-    <div className='border-2 border-black p-2'>
-      <h4 className='text-center'>PriceFilters</h4>
+    <div className='filter-container'>
+      <TitleFilter title='Prices'/>
       <div className='flex flex-col '>
         <label htmlFor='price'>Min</label>
         <input
