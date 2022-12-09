@@ -6,7 +6,7 @@ interface props{
 
 const Title = ({Title}:props) => {
   return (
-    <h3>{Title}</h3>
+    <h3 className='text-center'>{Title}</h3>
   )
 }
 
