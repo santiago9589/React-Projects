@@ -1,5 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next'
-import { useMemo, useState } from 'react'
+import { useMemo} from 'react'
 import { api, Product } from '../api/product'
 import CardProduct from '../components/CardProduct'
 import ColorComponent from '../components/ColorComponent'
