@@ -7,6 +7,21 @@
     body{
         @apply bg-blue-100
     }
+
+    tr{
+        @apply bg-slate-200 m-2 p-2 border-2 border-black rounded-lg
+    }
+
+    .id-select{
+        @apply w-40 text-center
+    }
+
+    th,td{
+        @apply w-16 text-center
+    }
+
+
+    
 }
 
 @layer components{

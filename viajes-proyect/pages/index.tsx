@@ -35,7 +35,7 @@ const Home: NextPage<props> = ({ origins }) => {
                 adipisicing elit. Exercitationem ullam
                 beatae dolorem natus aspernatur culpa
                </p>
-              <img src={origin.photo} className="w-full h-60" alt="photo.origin" />
+              <img src={origin.photo} className="w-full h-60 " alt="photo.origin" />
 
               <button className='bg-black p-2 text-white rounded-md m-2 hover:cursor-pointer'><Link href={`/${origin.origin}`}>Ver Oferta </Link></button>
 

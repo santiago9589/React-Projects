@@ -9,7 +9,7 @@ interface props {
 const Footer = ({ footer }: props) => {
 
   return (
-    <footer className="flex items-center justify-center col-span-full row-span-3">
+    <footer className="flex items-center justify-center col-span-full row-span-3 mt-4">
       <Image src="/copyright-icon.svg" width={22} height={25} alt="logo" />
       <h2 className='ml-2 text-center text-lg font-serif'>{footer}</h2>
     </footer>

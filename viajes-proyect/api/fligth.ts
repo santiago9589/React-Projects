@@ -1,6 +1,6 @@
 import { Fligth } from "../models/fligth";
 import { Trip } from "../models/trip";
-
+import crypto from "crypto"
 
 export const Fligths: Fligth[] = [
     {
@@ -7266,7 +7266,7 @@ export const api = {
     origins: async (): Promise<origins[]> => {
 
         const origins = new Set<string>()
-        const originsComplete:origins[] = []
+        const originsComplete: origins[] = []
 
         Fligths.forEach((fligth) => {
             origins.add(fligth.origin)
@@ -7275,20 +7275,54 @@ export const api = {
         const setOrigins = Array.from(origins)
 
 
-        setOrigins.forEach((origin)=>{
-                originsComplete.push({
-                    origin:origin,
-                    photo:photos[origin]
-                })
+        setOrigins.forEach((origin) => {
+            originsComplete.push({
+                origin: origin,
+                photo: photos[origin]
             })
+        })
 
-            originsComplete
+        originsComplete
 
         return originsComplete
     },
 
-    list: async (): Promise<Trip[]> => {
-        return []
+    list: async (origin: Fligth["origin"] ): Promise<Trip[]> => {
+            console.log(origin)
+        const Trips : Trip[] = []
+        const [origins, destinations] = Fligths.reduce<[Fligth[], Fligth[]]>(([origins, destinations], fligth) => {
+
+            if (fligth.origin === origin) {
+                origins.push(fligth)
+            } else {
+                if (fligth.destination === origin ) {
+                    destinations.push(fligth)
+                }
+            }
+            return [origins, destinations]
+        }, [[], []])
+
+        
+
+        destinations.forEach((destination)=>{
+            
+            origins.forEach((origin)=>{
+                
+                if(new Date(destination.date) > new Date(origin.date) && ((destination.price + origin.price)<800) && (origin.destination === destination.origin)){
+
+                    Trips.push({
+                        id:crypto.randomUUID(),
+                        destination,
+                        origin,
+                        price:Math.round(destination.price + origin.price),
+                        days:Math.round((new Date(destination.date).getTime() -  new Date(origin.date).getTime())/ (1000*60*60*24))
+                    })
+                }
+            })  
+        })
+
+
+        return Trips
     }
 }
 
