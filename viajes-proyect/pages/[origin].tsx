@@ -81,7 +81,10 @@ const OriginPage = ({ trips }: propsStatic) => {
                                     {trip.origin.destination}</td>
                                 <td>{trip.destination.origin}
                                     {trip.destination.destination}</td>
-                                <td>{trip.price}</td>
+                                <td>{trip.price.toLocaleString("es-AR",{
+                                    style:"currency",
+                                    currency:"ARS"
+                                })}</td>
                                 <td>{trip.days}</td>
                             </tr>
                         )
