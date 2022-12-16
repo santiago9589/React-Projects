@@ -2,13 +2,15 @@ import {createContext} from "react"
 import { Product } from "../types/product"
 import { User } from "../types/user"
 
+
 export interface ContextProps{
     state:{
         user:User,
-        products:Product[]
+        products:Product[],
     }
     actions:{
         addCoin : (amount:number)=>Promise<void>
+        handleBuy : (product:Product) =>Promise<void>
     }
 }
 

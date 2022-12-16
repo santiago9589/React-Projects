@@ -9,7 +9,7 @@ const Navbar = () => {
 
     const [user,addCoin] = useCoins()
     return (
-        <nav className='flex flex-row bg-white shadow-slate-300 border-2 w-full justify-between items-center mx-auto p-2'>
+        <nav className='flex flex-row bg-white shadow-slate-300 border-2 w-full justify-between items-center mx-auto p-2 box-border h-12'>
             <img src={logo} alt="logo" />
             <section className='flex flex-row items-center justify-between max-w-[96%] '>
                 <p className='mr-2'>{user.name}</p>

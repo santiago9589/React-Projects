@@ -1,14 +1,22 @@
-import React, { useMemo, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
+import { ContextApi } from '../../context/context'
 import { useProduct } from '../../hooks/product.hook'
 import { Filters } from "../../types/filterEnum"
+import { Product } from '../../types/product'
+import CardProducts from './CardProducts'
 import CounterComponent from './CounterComponent'
 import FilterComponent from './FilterComponent'
+import {useNavigate} from "react-router-dom"
 
 
 const ProductsComponent = () => {
 
   const [filter, setFilter] = useState<Filters>(Filters.mostRecently)
-  const products = useProduct()
+  const [isSelected,setIsSelected] = useState<Product["_id"] | null>()
+  const [products,handleBuy] = useProduct()
+  const navigate = useNavigate()
+
+  
 
   const onChangeFilter = (filter: Filters) => {
     setFilter(filter)
@@ -32,14 +40,19 @@ const ProductsComponent = () => {
       <header className='flex flex-row space-x-4 mt-2'>
         <CounterComponent quantity={products.length} total={products.length} />
         <FilterComponent active={filter} onChange={onChangeFilter} />
+        <button onClick={()=>navigate(`/history`)}>Show History</button>
       </header>
-      <section className='grid grid-cols-3x gap-2'>
+      <section className='grid grid-cols-3x gap-2 box-border'>
         {
           filterSelected.map((product, index) => {
             return (
-              <div key={index}>
-                {product.name}
-              </div>
+              <CardProducts
+              key={index} 
+              handleClick={setIsSelected}
+              product={product} 
+              isSelected={isSelected === product._id} 
+              handleBuy={handleBuy}
+              />
             )
           })
         }

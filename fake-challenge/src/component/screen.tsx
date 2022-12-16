@@ -8,7 +8,7 @@ const ScreenComponent = () => {
 
     return (
         <main className='flex-1 p-2'>
-            <section className="bg-background flex items-end bg-cover h-72 justify-start p-4">
+            <section className="bg-background flex items-end bg-cover bg-left h-52 justify-start p-4">
                 <header className='text-white text-2xl font-mono'>
                     Electronics
                 </header>

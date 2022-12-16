@@ -8,7 +8,7 @@ interface props{
 
 const CounterComponent = ({quantity,total}:props) => {
   return (
-    <span className='p-2'>{quantity} de {total} productos totales</span>
+    <span className='p-2 m-2'>{quantity} de {total} productos totales</span>
   )
 }
 
