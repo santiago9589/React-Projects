@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer{
+    body{
+        @apply bg-cyan-200
+    }
+}
+
+@layer components{
+    .button-primary{
+        @apply  my-4 bg-cyan-300  text-xl p-4 font-serif w-full rounded-xl hover:bg-cyan-400 hover:scale-110 cursor-pointer border-2
+    }
+}
