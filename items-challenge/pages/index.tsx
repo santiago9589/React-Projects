@@ -3,33 +3,15 @@ import { useState } from 'react'
 import FormAdd from '../components/FormAdd'
 import ItemComponent from '../components/ItemComponent'
 import Modal from '../components/Modal'
-import { Item } from '../types/Item'
-import {api} from "./api/api"
+import { useItems } from '../hooks/item'
+
 
 
 
 const Home: NextPage = () => {
 
-  const [items, setItems] = useState<Item[]>([])
+  const [addItems,deleteItems,items] = useItems()
   const [isVisible, setIsVisible] = useState<Boolean>()
-
-
-  const addItems = async(item:Item)=>{
-    await  api.addItems(item).then((res)=>{
-        setItems([...items,res])
-    })
-  }
-
-  const deleteItems = async(item:Item)=>{
-    await api.deleteItems(item).then((res)=>{
-        const dratf = new Set(items)
-        if(dratf.has(res)){
-          dratf.delete(res)
-          setItems(Array.from(dratf))
-        }
-    })
-  }
-
 
   return (
     <main className='flex items-center justify-center w-screen h-screen'>

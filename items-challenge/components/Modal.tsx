@@ -7,13 +7,13 @@ interface props {
 
 const Modal = ({ children,onClose }: props) => {
     return (
-        <section
+        <section onKeyDown={(e)=>e.key === "Escape" && onClose()}
             className='w-screen h-screen flex flex-col justify-center items-center absolute top-0 right-0'>
             <b className='w-screen h-screen absolute bg-black opacity-20 top-0 right-0 ' onClick={onClose}/>
             <section className='bg-white z-10 w-1/3 h-0.45 rounded-xl'>
                 {children}
             </section>
-            <p className='text-red-400 text-xl'>Press Esc ["ESC"] move to menu</p>
+            <p className='text-red-400 text-xl'>Press "ESC" to cancel</p>
         </section>
     )
 }
