@@ -1,5 +1,6 @@
 import { Anwser } from "../../types/Anwser";
 import {decode} from 'html-entities';
+import axios from "axios"
 
 const anwserMock: Anwser[] = [{
     "category": "Celebrities",
@@ -12,7 +13,10 @@ const anwserMock: Anwser[] = [{
 
 export const api = {
     data: async (): Promise<Anwser[]> => {
-        return anwserMock.map((question)=>{
+
+        const response = await axios.get("https://opentdb.com/api.php?amount=10")
+
+        return response.data.results.map((question:Anwser)=>{
             return {
                 ...question,question:decode(question.question),correct_answer:decode(question.correct_answer)
             }

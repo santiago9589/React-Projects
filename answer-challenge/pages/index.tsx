@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next'
 import { api } from "./api/api"
 import { Anwser } from '../types/Anwser'
-import { use, useState } from "react"
+import { useState } from "react"
 
 interface props {
   response: Anwser[]
