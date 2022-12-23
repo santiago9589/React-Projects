@@ -1,4 +1,5 @@
 import { Anwser } from "../../types/Anwser";
+import {decode} from 'html-entities';
 
 const anwserMock: Anwser[] = [{
     "category": "Celebrities",
@@ -11,6 +12,10 @@ const anwserMock: Anwser[] = [{
 
 export const api = {
     data: async (): Promise<Anwser[]> => {
-        return anwserMock
+        return anwserMock.map((question)=>{
+            return {
+                ...question,question:decode(question.question),correct_answer:decode(question.correct_answer)
+            }
+        })
     }
 }
