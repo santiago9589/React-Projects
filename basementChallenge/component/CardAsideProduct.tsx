@@ -1,27 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { ContextApp } from '../context/contextApp'
 import { Product } from '../product/types'
+import { useQuantity } from '../hooks/quantity.hook'
 
 
 interface props {
   product: Product
-  handleEditQuantity:(product:Product,quantity:number)=>void
-  handleEditSize:(product:Product,size:string)=>void
 }
 
-const CardAsideProduct = ({ product,handleEditQuantity,handleEditSize}: props) => {
+const CardAsideProduct = ({ product}: props) => {
 
-  const [quantity, setQuantity] = useState<number>(1)
+  const [quantity, handleQuantity] = useQuantity()
+  const {actions} = useContext(ContextApp)
 
-  const handleQuantity = (number:number) =>{
-    if(quantity>=1){
-      setQuantity((quantity)=>quantity+number)
-    }else{
-      setQuantity((quantity)=>quantity+1)
-    }
-  }
-  
   useEffect(()=>{
-          handleEditQuantity(product,quantity)
+          actions.handleEditQuantity(product,quantity)
  
   },[quantity])
 
@@ -45,10 +38,10 @@ const CardAsideProduct = ({ product,handleEditQuantity,handleEditSize}: props) =
             <section className='flex flex-col items-center sm:flex-row'>
               <p className='text-lg uppercase font-BasementGrotesque mr-2'>Size:</p>
               <ul className='flex space-x-3 items-center'>
-                <li className={`${product.options.size === "S" ? ("border-2 rounded-rq  uppercase text-xl") : (null)}`} onClick={()=>{handleEditSize(product,"S")}}>S</li>
-                <li className={`${product.options.size === "M" ? ("border-2 rounded-rq  uppercase text-xl") : (null)}`} onClick={()=>{handleEditSize(product,"M")}}>M</li>
-                <li className={`${product.options.size === "L" ? ("border-2 rounded-rq  uppercase text-xl") : (null)}`} onClick={()=>{handleEditSize(product,"L")}}>L</li>
-                <li className={`${product.options.size === "XL" ? ("border-2 rounded-rq  uppercase text-xl") : (null)}`} onClick={()=>{handleEditSize(product,"XL")}}>XL</li>
+                <li className={`${product.options.size === "S" ? ("border-2 rounded-rq  uppercase text-xl") : (null)}`} onClick={()=>{actions.handleEditSize(product,"S")}}>S</li>
+                <li className={`${product.options.size === "M" ? ("border-2 rounded-rq  uppercase text-xl") : (null)}`} onClick={()=>{actions.handleEditSize(product,"M")}}>M</li>
+                <li className={`${product.options.size === "L" ? ("border-2 rounded-rq  uppercase text-xl") : (null)}`} onClick={()=>{actions.handleEditSize(product,"L")}}>L</li>
+                <li className={`${product.options.size === "XL" ? ("border-2 rounded-rq  uppercase text-xl") : (null)}`} onClick={()=>{actions.handleEditSize(product,"XL")}}>XL</li>
               </ul>
             </section>
           </section>

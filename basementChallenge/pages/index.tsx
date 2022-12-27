@@ -8,11 +8,12 @@ import { Api } from "../api/api";
 import logo from "../public/logo.svg"
 import CardProducts from "../component/CardProducts";
 import piece from "../public/Group.svg"
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import yourCard from "../public/yourcart.svg"
 import close from "../public/Close.svg"
 import CardAsideProduct from "../component/CardAsideProduct";
 import check from "../public/checkout.svg"
+import { ContextApp } from "../context/contextApp";
 
 
 interface props {
@@ -32,38 +33,14 @@ export const getStaticProps: GetStaticProps<props, any> = async () => {
 const Home: NextPage<props> = ({ products }) => {
 
   const [isShowModal, setIsShowModal] = useState<boolean>(false)
-  const [cart, setCart] = useState<Product[]>([])
-
-
-  const handleAdd = (product: Product) => {
-    if (!product) return
-    setCart((cart) => [...cart, { ...product }])
-  }
-
-  const handleEditSize = (product: Product, size: string) => {
-    if (!product) return
-    const dratf = new Set(cart)
-    if (dratf.has(product)) {
-      product.options.size = size
-      setCart(Array.from(dratf))
-    }
-  }
-
-  const handleEditQuantity = (product: Product, quantity: number) => {
-    if (!product) return
-    const dratf = new Set(cart)
-    if (dratf.has(product)) {
-      product.options.quantity = quantity
-      setCart(Array.from(dratf))
-    }
-  }
+  const {state,actions} = useContext(ContextApp)
 
   const handlePrice = useMemo(() => {
-    const price = cart.reduce((sum, product) => {
+    const price = state.cart.reduce((sum, product) => {
       return sum = sum + ((product.price * product.options.quantity))
     }, 0)
     return price
-  }, [cart])
+  }, [state.cart])
 
   return (
     <main className="container mx-auto relative">
@@ -74,7 +51,7 @@ const Home: NextPage<props> = ({ products }) => {
       <header className="my-1 min-w-full">
         <nav className="flex justify-between items-center overflow-hidden mb-2">
           <Image className="cover" alt="logo" src={logo} />
-          <button onClick={() => setIsShowModal(true)} className="border-2 rounded-rq w-38 p-2 text-white text-xl font-bold font-BasementGrotesque leading-5 not-italic tracking-tighter uppercase hover:bg-white hover:border-black hover:text-black "><p> Cart ({cart.length})</p></button>
+          <button onClick={() => setIsShowModal(true)} className="border-2 rounded-rq w-38 p-2 text-white text-xl font-bold font-BasementGrotesque leading-5 not-italic tracking-tighter uppercase hover:bg-white hover:border-black hover:text-black "><p> Cart ({state.cart.length})</p></button>
         </nav>
         <Image alt="headerImage" src={header} />
         <Marquee direction="left" loop={0} speed={180} gradientColor={[0, 0, 0]} className="border-t-2 border-b-2 p-1 text-lg overflow-hidden bg-none w-full">
@@ -85,7 +62,7 @@ const Home: NextPage<props> = ({ products }) => {
         {
           products.map((product, index) => {
             return (
-              <CardProducts key={index} product={product} handleAdd={handleAdd} />
+              <CardProducts key={index} product={product} />
             )
           })
         }
@@ -108,9 +85,9 @@ const Home: NextPage<props> = ({ products }) => {
               </header>
               <section className="p-2">
                 {
-                  cart.map((product, index) => {
+                  state.cart.map((product, index) => {
                     return (
-                      <CardAsideProduct key={index} product={product} handleEditSize={handleEditSize} handleEditQuantity={handleEditQuantity} />
+                      <CardAsideProduct key={index} product={product}  />
                     )
                   })
                 }
@@ -121,7 +98,7 @@ const Home: NextPage<props> = ({ products }) => {
                   })}</p>
                   <section className="flex-2" onClick={() => {
                     alert("Succesfully")
-                    setCart([])
+                    actions.setCart([])
                     setIsShowModal(false)
                   }}>
                     <Image src={check} alt="checkout" />
